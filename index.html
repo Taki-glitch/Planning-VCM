@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>VCM — Éditeur de Programmes</title>
+  <link rel="stylesheet" href="style.css" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+</head>
+<body>
+  <div id="app">
+    <!-- SIDEBAR -->
+    <aside id="sidebar">
+      <div class="sidebar-header">
+        <h1>VCM Planning</h1>
+        <p>Éditeur de programmes de réunion</p>
+      </div>
+
+      <nav class="sidebar-nav">
+        <button class="nav-btn active" data-tab="editor">✏️ Éditeur</button>
+        <button class="nav-btn" data-tab="sessions">📋 Séances</button>
+        <button class="nav-btn" data-tab="settings">⚙️ Paramètres</button>
+      </nav>
+
+      <div id="sessions-list" class="sessions-panel hidden">
+        <div class="panel-title">Séances enregistrées</div>
+        <div id="saved-sessions"></div>
+        <button id="new-session-btn" class="btn-primary">+ Nouvelle séance</button>
+      </div>
+    </aside>
+
+    <!-- MAIN CONTENT -->
+    <main id="main">
+      <!-- TAB: EDITOR -->
+      <div id="tab-editor" class="tab-content active">
+        <div class="editor-toolbar">
+          <h2 id="current-session-title">Nouvelle séance</h2>
+          <div class="toolbar-actions">
+            <button id="save-btn" class="btn-secondary">💾 Sauvegarder</button>
+            <button id="preview-btn" class="btn-secondary">👁 Aperçu</button>
+            <button id="export-btn" class="btn-primary">📄 Exporter PDF</button>
+          </div>
+        </div>
+
+        <form id="meeting-form">
+          <!-- HEADER INFO -->
+          <section class="form-section section-header">
+            <h3>En-tête</h3>
+            <div class="form-grid-3">
+              <div class="form-group">
+                <label>Nom de la congrégation</label>
+                <input type="text" id="congregation" value="НАНТ РУССКОЕ" placeholder="Nom de la congrégation"/>
+              </div>
+              <div class="form-group">
+                <label>Date de la réunion</label>
+                <input type="date" id="meeting-date"/>
+              </div>
+              <div class="form-group">
+                <label>Jour de la semaine</label>
+                <select id="meeting-day">
+                  <option>LUNDI</option><option>MARDI</option><option selected>MERCREDI</option>
+                  <option>JEUDI</option><option>VENDREDI</option><option>SAMEDI</option><option>DIMANCHE</option>
+                </select>
+              </div>
+            </div>
+            <div class="form-grid-3">
+              <div class="form-group">
+                <label>Lectures bibliques (ex: JÉRÉMIE 1-3)</label>
+                <input type="text" id="bible-reading" placeholder="ex: JÉRÉMIE 4-6"/>
+              </div>
+              <div class="form-group">
+                <label>Président</label>
+                <input type="text" id="chairman" placeholder="Nom Prénom"/>
+              </div>
+              <div class="form-group">
+                <label>Heure de début</label>
+                <input type="time" id="start-time" value="19:00"/>
+              </div>
+            </div>
+          </section>
+
+          <!-- OPENING -->
+          <section class="form-section section-opening">
+            <h3>Ouverture</h3>
+            <div class="form-grid-3">
+              <div class="form-group">
+                <label>Cantique d'ouverture (numéro)</label>
+                <input type="number" id="song-open" placeholder="ex: 56" min="1" max="151"/>
+              </div>
+              <div class="form-group">
+                <label>Prière d'ouverture</label>
+                <input type="text" id="prayer-open" placeholder="Nom Prénom"/>
+              </div>
+            </div>
+          </section>
+
+          <!-- SECTION 1 : TRESORS -->
+          <section class="form-section section-treasures">
+            <h3>🟤 Trésors tirés de la Parole de Dieu</h3>
+
+            <div class="part-block">
+              <div class="part-label">Partie 1 — Discours principal</div>
+              <div class="form-grid-3">
+                <div class="form-group col-span-2">
+                  <label>Titre</label>
+                  <input type="text" class="part-title" id="t1-title" placeholder="Titre du discours"/>
+                </div>
+                <div class="form-group">
+                  <label>Durée (min)</label>
+                  <input type="number" class="part-duration" id="t1-duration" value="10" min="1" max="60"/>
+                </div>
+              </div>
+              <div class="form-grid-3">
+                <div class="form-group">
+                  <label>Orateur</label>
+                  <input type="text" class="part-speaker" id="t1-speaker" placeholder="Nom Prénom"/>
+                </div>
+              </div>
+            </div>
+
+            <div class="part-block">
+              <div class="part-label">Partie 2 — Perles spirituelles</div>
+              <div class="form-grid-3">
+                <div class="form-group">
+                  <label>Durée (min)</label>
+                  <input type="number" id="t2-duration" value="10" min="1" max="60"/>
+                </div>
+                <div class="form-group">
+                  <label>Orateur</label>
+                  <input type="text" id="t2-speaker" placeholder="Nom Prénom"/>
+                </div>
+              </div>
+            </div>
+
+            <div class="part-block">
+              <div class="part-label">Partie 3 — Lecture de la Bible</div>
+              <div class="form-grid-3">
+                <div class="form-group">
+                  <label>Durée (min)</label>
+                  <input type="number" id="t3-duration" value="4" min="1" max="60"/>
+                </div>
+                <div class="form-group">
+                  <label>Élève (lecteur)</label>
+                  <input type="text" id="t3-student" placeholder="Nom Prénom"/>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <!-- SECTION 2 : SERVICE -->
+          <section class="form-section section-service">
+            <h3>🟡 Approfondissons nos aptitudes pour le ministère</h3>
+            <div id="service-parts-container">
+              <!-- Dynamically added parts -->
+            </div>
+            <button type="button" id="add-service-part" class="btn-add">+ Ajouter une partie</button>
+          </section>
+
+          <!-- SECTION 3 : CHRISTIAN LIFE -->
+          <section class="form-section section-christian">
+            <h3>⚫ Notre vie chrétienne</h3>
+            <div class="form-grid-3">
+              <div class="form-group">
+                <label>Cantique du milieu (numéro)</label>
+                <input type="number" id="song-middle" placeholder="ex: 76" min="1" max="151"/>
+              </div>
+            </div>
+
+            <div id="christian-parts-container">
+              <!-- Dynamically added parts -->
+            </div>
+            <button type="button" id="add-christian-part" class="btn-add">+ Ajouter une partie</button>
+
+            <!-- CONGREGATION BIBLE STUDY -->
+            <div class="part-block study-block">
+              <div class="part-label">Étude de la Bible en congrégation</div>
+              <div class="form-grid-3">
+                <div class="form-group">
+                  <label>Durée (min)</label>
+                  <input type="number" id="study-duration" value="30" min="1" max="60"/>
+                </div>
+                <div class="form-group">
+                  <label>Conducteur</label>
+                  <input type="text" id="study-conductor" placeholder="Nom Prénom"/>
+                </div>
+                <div class="form-group">
+                  <label>Lecteur</label>
+                  <input type="text" id="study-reader" placeholder="Nom Prénom"/>
+                </div>
+              </div>
+            </div>
+
+            <div class="part-block">
+              <div class="part-label">Remarques finales</div>
+              <div class="form-group">
+                <label>Durée (min)</label>
+                <input type="number" id="closing-duration" value="3" min="1" max="10"/>
+              </div>
+            </div>
+          </section>
+
+          <!-- CLOSING -->
+          <section class="form-section section-closing">
+            <h3>Clôture</h3>
+            <div class="form-grid-3">
+              <div class="form-group">
+                <label>Cantique de clôture (numéro)</label>
+                <input type="number" id="song-close" placeholder="ex: 135" min="1" max="151"/>
+              </div>
+              <div class="form-group">
+                <label>Prière de clôture</label>
+                <input type="text" id="prayer-close" placeholder="Nom Prénom"/>
+              </div>
+            </div>
+          </section>
+        </form>
+      </div>
+
+      <!-- TAB: SESSIONS -->
+      <div id="tab-sessions" class="tab-content hidden">
+        <div class="editor-toolbar">
+          <h2>Séances sauvegardées</h2>
+          <button id="new-session-btn2" class="btn-primary">+ Nouvelle séance</button>
+        </div>
+        <div id="sessions-grid" class="sessions-grid"></div>
+      </div>
+
+      <!-- TAB: SETTINGS -->
+      <div id="tab-settings" class="tab-content hidden">
+        <div class="editor-toolbar">
+          <h2>Paramètres</h2>
+        </div>
+        <section class="form-section">
+          <h3>Congrégation par défaut</h3>
+          <div class="form-grid-3">
+            <div class="form-group">
+              <label>Nom de la congrégation</label>
+              <input type="text" id="default-congregation" placeholder="Nom de la congrégation"/>
+            </div>
+            <div class="form-group">
+              <label>Heure de début par défaut</label>
+              <input type="time" id="default-start-time" value="19:00"/>
+            </div>
+          </div>
+          <button id="save-settings-btn" class="btn-primary">Sauvegarder</button>
+        </section>
+      </div>
+    </main>
+  </div>
+
+  <!-- PREVIEW MODAL -->
+  <div id="preview-modal" class="modal hidden">
+    <div class="modal-backdrop"></div>
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3>Aperçu du programme</h3>
+        <button id="close-preview" class="btn-close">✕</button>
+      </div>
+      <div id="preview-container" class="preview-container"></div>
+      <div class="modal-footer">
+        <button id="export-from-preview" class="btn-primary">📄 Exporter PDF</button>
+        <button id="close-preview2" class="btn-secondary">Fermer</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
