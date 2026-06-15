@@ -62,8 +62,8 @@
             <h3>En-tête</h3>
             <div class="form-grid-3">
               <div class="form-group">
-                <label>Nom de la congrégation</label>
-                <input type="text" id="congregation" value="НАНТ РУССКОЕ" placeholder="Nom de la congrégation"/>
+                <label>Nom de l'assemblée</label>
+                <input type="text" id="assemblee" value="НАНТ РУССКОЕ" placeholder="Nom de la assemblee"/>
               </div>
               <div class="form-group">
                 <label>Date de la réunion</label>
@@ -98,8 +98,8 @@
             <h3>Configuration du mois</h3>
             <div class="form-grid-3">
               <div class="form-group">
-                <label>Nom de la congrégation</label>
-                <input type="text" id="m-congregation" value="НАНТ РУССКОЕ" placeholder="Nom de la congrégation"/>
+                <label>Nom de l'assemblée</label>
+                <input type="text" id="m-assemblee" value="НАНТ РУССКОЕ" placeholder="Nom de la assemblée"/>
               </div>
               <div class="form-group">
                 <label>Mois (année-mois)</label>
@@ -132,11 +132,11 @@
             <h3>Ouverture</h3>
             <div class="form-grid-3">
               <div class="form-group">
-                <label>Cantique d'ouverture (numéro)</label>
-                <input type="number" id="song-open" placeholder="ex: 56" min="1" max="151"/>
+                <label>Cantique (numéro)</label>
+                <input type="number" id="song-open" placeholder="ex: 56" min="1" max="165"/>
               </div>
               <div class="form-group">
-                <label>Prière d'ouverture</label>
+                <label>Prière</label>
                 <input type="text" id="prayer-open" placeholder="Nom Prénom"/>
               </div>
             </div>
@@ -144,10 +144,10 @@
 
           <!-- SECTION 1 : TRESORS -->
           <section class="form-section section-treasures">
-            <h3>🟤 Trésors tirés de la Parole de Dieu</h3>
+            <h3>🟤 Joyaux de la Parole de Dieu</h3>
 
             <div class="part-block">
-              <div class="part-label">Partie 1 — Discours principal</div>
+              <div class="part-label">Partie 1 — Joyaux de la Parole de Dieu</div>
               <div class="form-grid-3">
                 <div class="form-group col-span-2">
                   <label>Titre</label>
@@ -167,7 +167,7 @@
             </div>
 
             <div class="part-block">
-              <div class="part-label">Partie 2 — Perles spirituelles de la Parole de Dieu</div>
+              <div class="part-label">Partie 2 — Perles spirituelles</div>
               <div class="form-grid-3">
                 <div class="form-group">
                   <label>Durée (min)</label>
@@ -197,7 +197,7 @@
 
           <!-- SECTION 2 : SERVICE -->
           <section class="form-section section-service">
-            <h3>🟡 Approfondissons nos aptitudes pour le ministère</h3>
+            <h3>🟡 Applique-toi au ministère</h3>
             <div id="service-parts-container">
               <!-- Dynamically added parts -->
             </div>
@@ -206,10 +206,10 @@
 
           <!-- SECTION 3 : CHRISTIAN LIFE -->
           <section class="form-section section-christian">
-            <h3>⚫ Notre vie chrétienne</h3>
+            <h3>⚫ Vie chrétienne</h3>
             <div class="form-grid-3">
               <div class="form-group">
-                <label>Cantique du milieu (numéro)</label>
+                <label>Cantique (numéro)</label>
                 <input type="number" id="song-middle" placeholder="ex: 76" min="1" max="151"/>
               </div>
             </div>
@@ -221,7 +221,7 @@
 
             <!-- CONGREGATION BIBLE STUDY -->
             <div class="part-block study-block">
-              <div class="part-label">Étude de la Bible en congrégation</div>
+              <div class="part-label">Étude biblique de l'assemblée</div>
               <div class="form-grid-3">
                 <div class="form-group">
                   <label>Durée (min)</label>
@@ -239,7 +239,7 @@
             </div>
 
             <div class="part-block">
-              <div class="part-label">Remarques finales</div>
+              <div class="part-label">Communications</div>
               <div class="form-group">
                 <label>Durée (min)</label>
                 <input type="number" id="closing-duration" value="3" min="1" max="10"/>
@@ -249,14 +249,14 @@
 
           <!-- CLOSING -->
           <section class="form-section section-closing">
-            <h3>Clôture</h3>
+            <h3>Fin de la réunion</h3>
             <div class="form-grid-3">
               <div class="form-group">
-                <label>Cantique de clôture (numéro)</label>
+                <label>Cantique de fin (numéro)</label>
                 <input type="number" id="song-close" placeholder="ex: 135" min="1" max="151"/>
               </div>
               <div class="form-group">
-                <label>Prière de clôture</label>
+                <label>Prière finale</label>
                 <input type="text" id="prayer-close" placeholder="Nom Prénom"/>
               </div>
             </div>
@@ -279,11 +279,11 @@
           <h2>Paramètres</h2>
         </div>
         <section class="form-section">
-          <h3>Congrégation par défaut</h3>
+          <h3>Assemblée par défaut</h3>
           <div class="form-grid-3">
             <div class="form-group">
-              <label>Nom de la congrégation</label>
-              <input type="text" id="default-congregation" placeholder="Nom de la congrégation"/>
+              <label>Nom de l'assemblee</label>
+              <input type="text" id="default-assemblee" placeholder="Nom de la assemblée"/>
             </div>
             <div class="form-group">
               <label>Heure de début par défaut</label>
