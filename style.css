@@ -3,22 +3,23 @@
    ============================================ */
 
 :root {
-  /* Brand colors inspired by the JW program layout */
+  /* Brand colors from the official JW PDF */
   --color-bg: #f5f4f0;
   --color-sidebar: #1a2744;
   --color-sidebar-hover: #243460;
   --color-sidebar-active: #2e4080;
-  --color-accent: #2e4080;
+  --color-accent: #1a2744;
   --color-text: #1a1a1a;
   --color-text-muted: #666;
   --color-border: #ddd;
   --color-white: #fff;
 
-  /* Section colors matching the PDF */
-  --color-treasures: #8B4513;   /* brown */
-  --color-service: #B8860B;     /* dark golden */
-  --color-christian: #1a1a1a;   /* near black */
-  --color-header-row: #d4c8a8;  /* tan/beige */
+  /* Section colors matching the original PDF exactly */
+  --color-treasures: #6b3010;   /* brown from PDF */
+  --color-service: #8B6914;     /* golden-brown from PDF */
+  --color-christian: #2a2a2a;   /* dark gray from PDF */
+  --color-header-dark: #1a2744; /* dark header */
+  --color-header-row: #e4dcc8;  /* light tan from PDF */
 
   /* Layout */
   --sidebar-width: 240px;
