@@ -72,9 +72,9 @@ function switchTab(tabName) {
 // DEFAULT PARTS
 // ============================================================
 function addDefaultServiceParts() {
-  addServicePart({ title: 'Commencez la conversation', duration: 3, type: 'eleve', hasHelper: true });
-  addServicePart({ title: 'Développez l\'intérêt', duration: 4, type: 'eleve', hasHelper: true });
-  addServicePart({ title: 'Préparez des disciples', duration: 5, type: 'eleve', hasHelper: true });
+  addServicePart({ title: 'Engage la conversation', duration: 3, type: 'eleve', hasHelper: true });
+  addServicePart({ title: 'Entretiens l\'intérêt', duration: 4, type: 'eleve', hasHelper: true });
+  addServicePart({ title: 'Fais des disciples', duration: 5, type: 'eleve', hasHelper: true });
 }
 
 function addDefaultChristianParts() {
@@ -100,7 +100,7 @@ function addServicePart(data = {}) {
       <div class="form-group col-span-2">
         <label>Type de partie</label>
         <select class="sp-type">
-          <option value="eleve" ${data.type === 'eleve' ? 'selected' : ''}>Élève (avec assistant)</option>
+          <option value="eleve" ${data.type === 'eleve' ? 'selected' : ''}>Élève (avec interlocuteur)</option>
           <option value="discours" ${data.type === 'discours' ? 'selected' : ''}>Discours (orateur seul)</option>
         </select>
       </div>
@@ -112,7 +112,7 @@ function addServicePart(data = {}) {
     <div class="form-grid-3">
       <div class="form-group col-span-2">
         <label>Titre / Activité</label>
-        <input type="text" class="sp-title" value="${data.title || ''}" placeholder="ex: Commencez la conversation"/>
+        <input type="text" class="sp-title" value="${data.title || ''}" placeholder="ex: Engage la conversation"/>
       </div>
     </div>
     <div class="form-group">
@@ -235,7 +235,7 @@ function collectFormData() {
 
   return {
     id: currentSessionId || Date.now().toString(),
-    congregation: document.getElementById('congregation').value,
+    assemblee: document.getElementById('assemblee').value,
     date,
     day,
     bibleReading: document.getElementById('bible-reading').value,
@@ -266,7 +266,7 @@ function collectFormData() {
 // LOAD FORM DATA
 // ============================================================
 function loadFormData(data) {
-  document.getElementById('congregation').value = data.congregation || '';
+  document.getElementById('assemblee').value = data.assemblee || '';
   document.getElementById('meeting-date').value = data.date || '';
   document.getElementById('meeting-day').value = data.day || 'MERCREDI';
   document.getElementById('bible-reading').value = data.bibleReading || '';
@@ -331,7 +331,7 @@ function addServicePartFromData(data) {
     <div class="form-grid-3">
       <div class="form-group col-span-2">
         <label>Titre / Activité</label>
-        <input type="text" class="sp-title" value="${data.title || ''}" placeholder="ex: Commencez la conversation"/>
+        <input type="text" class="sp-title" value="${data.title || ''}" placeholder="ex: Engage la conversation"/>
       </div>
     </div>
     <div class="form-group">
@@ -480,7 +480,7 @@ function formatDateLabel(data) {
 // ============================================================
 function saveSettings() {
   const settings = {
-    congregation: document.getElementById('default-congregation').value,
+    assemblee: document.getElementById('default-assemblee').value,
     startTime: document.getElementById('default-start-time').value,
   };
   localStorage.setItem('vcm_settings', JSON.stringify(settings));
@@ -489,10 +489,10 @@ function saveSettings() {
 
 function loadSettings(applyToForm = false) {
   const settings = JSON.parse(localStorage.getItem('vcm_settings') || '{}');
-  document.getElementById('default-congregation').value = settings.congregation || '';
+  document.getElementById('default-assemblee').value = settings.assemblee || '';
   document.getElementById('default-start-time').value = settings.startTime || '19:00';
-  if (applyToForm || settings.congregation) {
-    if (settings.congregation) document.getElementById('congregation').value = settings.congregation;
+  if (applyToForm || settings.assemblee) {
+    if (settings.assemblee) document.getElementById('assemblee').value = settings.assemblee;
     if (settings.startTime) document.getElementById('start-time').value = settings.startTime;
   }
 }
@@ -544,7 +544,7 @@ function generateDocumentHTML(data) {
   cursor = addMinutes(cursor, 1);
 
   // === TREASURES ===
-  rows.push(sectionHeader('TRÉSORS TIRÉS DE LA PAROLE DE DIEU', 'doc-sec-treasures'));
+  rows.push(sectionHeader('JOYAUX DE LA PAROLE DE DIEU', 'doc-sec-treasures'));
 
   rows.push(tr(cursor, `1. ${data.t1Title || '(titre du discours)'}`, data.t1Speaker || '', data.t1Duration));
   cursor = addMinutes(cursor, data.t1Duration || 10);
@@ -556,7 +556,7 @@ function generateDocumentHTML(data) {
   cursor = addMinutes(cursor, data.t3Duration || 4);
 
   // === SERVICE ===
-  rows.push(sectionHeader('APPROFONDISSONS NOS APTITUDES POUR LE MINISTÈRE', 'doc-sec-service'));
+  rows.push(sectionHeader('APPLIQUE-TOI AU MINISTÈRE', 'doc-sec-service'));
 
   (data.serviceParts || []).forEach((part, i) => {
     let helperLines = '';
@@ -571,7 +571,7 @@ function generateDocumentHTML(data) {
   });
 
   // === CHRISTIAN LIFE ===
-  rows.push(sectionHeader('NOTRE VIE CHRÉTIENNE', 'doc-sec-christian'));
+  rows.push(sectionHeader('VIE CHRÉTIENNE', 'doc-sec-christian'));
 
   // Middle song
   const songMiddleTime = cursor;
@@ -588,7 +588,7 @@ function generateDocumentHTML(data) {
   const studyIdx = offset + (data.christianParts || []).length;
   rows.push(tr(
     cursor,
-    `${studyIdx}. Étude de la Bible en congrégation`,
+    `${studyIdx}. Étude biblique de l'assemblée`,
     `Conducteur : ${data.studyConductor || ''}<span class="doc-helpers"><span class="doc-helper-label">Lecteur : </span>${data.studyReader || ''}</span>`,
     data.studyDuration
   ));
@@ -611,7 +611,7 @@ function generateDocumentHTML(data) {
 
   return `
     <div class="preview-page">
-      <div class="doc-congregation-name">${data.congregation || 'CONGRÉGATION'}</div>
+      <div class="doc-assemblee-name">${data.assemblee || 'ASSEMBLEE'}</div>
       <div class="doc-sub-title">Programme de la réunion en semaine</div>
       <div class="doc-date-row">
         <span>${dateLabel}</span>
@@ -674,7 +674,7 @@ function exportPDF() {
           box-sizing: border-box;
         }
 
-        .doc-congregation-name {
+        .doc-assemblee-name {
           background: #1a2744;
           color: #fff;
           text-align: center;
