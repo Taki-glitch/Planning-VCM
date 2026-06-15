@@ -43,8 +43,22 @@
         </div>
 
         <form id="meeting-form">
-          <!-- HEADER INFO -->
+          <!-- PLANNING TYPE -->
           <section class="form-section section-header">
+            <h3>Type de planning</h3>
+            <div style="display:flex;gap:16px;margin-bottom:12px;">
+              <label style="display:flex;align-items:center;gap:8px;cursor:pointer;">
+                <input type="radio" name="planning-type" value="single" checked/>
+                <span>Planning simple (une seule réunion)</span>
+              </label>
+              <label style="display:flex;align-items:center;gap:8px;cursor:pointer;">
+                <input type="radio" name="planning-type" value="monthly"/>
+                <span>Planning mensuel (4 ou 5 réunions)</span>
+              </label>
+            </div>
+          </section>
+          <!-- HEADER INFO -->
+          <section class="form-section section-header" id="single-mode-section">
             <h3>En-tête</h3>
             <div class="form-grid-3">
               <div class="form-group">
@@ -79,6 +93,40 @@
             </div>
           </section>
 
+          <!-- MONTHLY MODE SECTION -->
+          <section class="form-section section-header hidden" id="monthly-mode-section">
+            <h3>Configuration du mois</h3>
+            <div class="form-grid-3">
+              <div class="form-group">
+                <label>Nom de la congrégation</label>
+                <input type="text" id="m-congregation" value="НАНТ РУССКОЕ" placeholder="Nom de la congrégation"/>
+              </div>
+              <div class="form-group">
+                <label>Mois (année-mois)</label>
+                <input type="month" id="m-month"/>
+              </div>
+              <div class="form-group">
+                <label>Jour de la semaine (réunion)</label>
+                <select id="m-day">
+                  <option>LUNDI</option><option>MARDI</option><option selected>MERCREDI</option>
+                  <option>JEUDI</option><option>VENDREDI</option><option>SAMEDI</option><option>DIMANCHE</option>
+                </select>
+              </div>
+            </div>
+            <div class="form-grid-3">
+              <div class="form-group">
+                <label>Heure de début</label>
+                <input type="time" id="m-start-time" value="19:00"/>
+              </div>
+              <div class="form-group">
+                <label>Président</label>
+                <input type="text" id="m-chairman" placeholder="Nom Prénom"/>
+              </div>
+            </div>
+            <div id="monthly-meetings-container"></div>
+            <button type="button" id="generate-months-btn" class="btn-primary" style="margin-top:12px;">Générer les réunions du mois</button>
+          </section>
+
           <!-- OPENING -->
           <section class="form-section section-opening">
             <h3>Ouverture</h3>
@@ -103,7 +151,7 @@
               <div class="form-grid-3">
                 <div class="form-group col-span-2">
                   <label>Titre</label>
-                  <input type="text" class="part-title" id="t1-title" placeholder="Titre du discours"/>
+                  <input type="text" class="part-title" id="t1-title" placeholder="ex: 'Découvrez la sagesse en Dieu'"/>
                 </div>
                 <div class="form-group">
                   <label>Durée (min)</label>
@@ -119,7 +167,7 @@
             </div>
 
             <div class="part-block">
-              <div class="part-label">Partie 2 — Perles spirituelles</div>
+              <div class="part-label">Partie 2 — Perles spirituelles de la Parole de Dieu</div>
               <div class="form-grid-3">
                 <div class="form-group">
                   <label>Durée (min)</label>
